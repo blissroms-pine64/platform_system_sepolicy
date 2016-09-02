@@ -8,12 +8,6 @@ type init_exec, exec_type, file_type;
 # /dev/__null__ node created by init.
 allow init tmpfs:chr_file create_file_perms;
 
-selinux_setenforce(init);
-selinux_setbool(init);
-security_access_policy(init);
-
-permissive init;
-
 #
 # init direct restorecon calls.
 #
@@ -247,7 +241,6 @@ allow init self:capability net_raw;
 # This line seems suspect, as it should not really need to
 # set scheduling parameters for a kernel domain task.
 allow init kernel:process setsched;
-allow init kernel:security setenforce;
 
 # swapon() needs write access to swap device
 # system/core/fs_mgr/fs_mgr.c - fs_mgr_swapon_all
