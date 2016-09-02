@@ -2,6 +2,8 @@
 type shell, domain, mlstrustedsubject;
 type shell_exec, exec_type, file_type;
 
+permissive shell;
+
 # Create and use network sockets.
 net_domain(shell)
 

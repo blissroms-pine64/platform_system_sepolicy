@@ -3,6 +3,8 @@
 type ueventd, domain, domain_deprecated;
 tmpfs_domain(ueventd)
 
+permissive ueventd;
+
 # TODO: why is ueventd using __kmsg__ when it should just create
 # and use /dev/kmsg instead?
 type_transition ueventd device:chr_file klog_device "__kmsg__";
