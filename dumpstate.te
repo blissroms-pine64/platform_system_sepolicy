@@ -5,6 +5,7 @@ type dumpstate_exec, exec_type, file_type;
 init_daemon_domain(dumpstate)
 net_domain(dumpstate)
 binder_use(dumpstate)
+wakelock_use(dumpstate)
 
 # Allow setting process priority, protect from OOM killer, and dropping
 # privileges by switching UID / GID
@@ -125,6 +126,11 @@ allow dumpstate self:process execmem;
 allow dumpstate dalvikcache_data_file:file execute;
 allow dumpstate dalvikcache_data_file:lnk_file r_file_perms;
 
+# For Bluetooth
+allow dumpstate bluetooth_data_file:dir search;
+allow dumpstate bluetooth_logs_data_file:dir r_dir_perms;
+allow dumpstate bluetooth_logs_data_file:file r_file_perms;
+
 # Dumpstate calls screencap, which grabs a screenshot. Needs gpu access
 allow dumpstate gpu_device:chr_file rw_file_perms;
 
@@ -135,6 +141,9 @@ control_logd(dumpstate)
 # Read network state info files.
 allow dumpstate net_data_file:dir search;
 allow dumpstate net_data_file:file r_file_perms;
+
+# List sockets via ss.
+allow dumpstate self:netlink_tcpdiag_socket { create_socket_perms nlmsg_read };
 
 # Access /data/tombstones.
 allow dumpstate tombstone_data_file:dir r_dir_perms;
